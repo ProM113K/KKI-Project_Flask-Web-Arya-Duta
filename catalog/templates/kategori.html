@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+Kategori Buku
+{% endblock %}
+
+{% block content %}
+<nav class="nav-category navbar-light">
+    <ul class="nav justify-content-center text-secondary">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('buku_sd') }}">SD</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('buku_smp') }}">SMP</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('buku_sma') }}">SMA</a>
+        </li>
+    </ul>
+</nav>
+{% block book_list %}
+
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Book Manager
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center post">Book Manager</h2>
+    <button class="btn btn-success float-right add" data-target="#tambahModal" data-toggle="modal" type="button"><i
+            class="far fa-plus-square ic-add"></i>Tambah
+    </button>
+
+    <!--Modal Tambah-->
+    <div aria-hidden="true" aria-labelledby="ModalLabelTambah" class="modal fade" id="tambahModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="ModalLabelTambah">Buku Baru</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/uploader" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Judul:</label>
+                            <input class="form-control" id="recipient-name" name="judul" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Kategori:</label>
+                            <select class="form-control" name="category" required title="kelas">
+                                <option value="sd">SD</option>
+                                <option value="smp">SMP</option>
+                                <option value="sma">SMA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Harga:</label>
+                            <input class="form-control" name="harga" required type="number">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Deskripsi:</label>
+                            <textarea class="form-control" id="message-text" name="deskripsi" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">ISBN:</label>
+                            <input class="form-control" name="isbn" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Penulis:</label>
+                            <input class="form-control" name="penulis" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Ukuran:</label>
+                            <input class="form-control" name="ukuran" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark">Halaman:</label>
+                            <input class="form-control" name="hlmn" required type="number">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark" for="exampleFormControlFile1">Cover:</label>
+                            <input class="form-control-file text-dark" id="exampleFormControlFile1" name="file" required
+                                   type="file">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Batal</button>
+                            <input class="btn btn-primary" type="submit" value="Tambah">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th hidden scope="col">ID</th>
+            <th hidden scope="col">Judul</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Kategori</th>
+            <th scope="col">Harga</th>
+            <th scope="col">Deskripsi</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Penulis</th>
+            <th scope="col">Ukuran</th>
+            <th scope="col">Halaman</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in book %}
+        <tr>
+            <td hidden>{{ data[0] }}</td>
+            <td hidden>{{ data[1] }}</td>
+            <td>{{ data[3] }}</td>
+            <td>{{ data[2] }}</td>
+            <td>{{ data[4] }}</td>
+            <td>{{ data[5] }}</td>
+            <td>{{ data[6] }}</td>
+            <td>{{ data[7] }}</td>
+            <td>{{ data[8] }}</td>
+            <td>{{ data[9] }}</td>
+            <td>
+                <button class="btn btn-outline btn-info" data-target="#ubahModal-{{ data[0] }}"
+                        data-toggle="modal"><i class="far fa-edit"></i></button>
+                <button class="btn btn-outline btn-danger" data-target="#hapusModal-{{ data[0] }}"
+                        data-toggle="modal"><i class="far fa-trash-alt"></i></button>
+
+                <!-- Modal Hapus-->
+                <div aria-hidden="true" aria-labelledby="ModalLabelHapus" class="modal fade"
+                     id="hapusModal-{{ data[0] }}" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-dark" id="ModalLabelHapus">Hapus Data Buku</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-dark">Anda yakin ingin menghapus data buku ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Tutup</button>
+                                <a href="/buku/hapus/{{ data[2] }}/{{ data[1] }}/{{ data[0] }}">
+                                    <button class="btn btn-danger" type="button">Yakin
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Modal Ubah-->
+                <div aria-hidden="true" aria-labelledby="ModalLabelEdit" class="modal fade text-dark"
+                     id="ubahModal-{{ data[0] }}" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLabelEdit">Ubah data buku</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/buku/ubah" method="post">
+                                    <div class="form-group" hidden>
+                                        <label class="col-form-label" for="recipient-name">ID:</label>
+                                        <input class="form-control" name="temp_id" type="text"
+                                               value="{{ data[0] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="recipient-name">Judul:</label>
+                                        <input class="form-control" name="judul" required
+                                               type="text" value="{{ data[3] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">Kategori:</label>
+                                        <select class="form-control" name="category" required title="kelas">
+                                            <option value="sd">SD</option>
+                                            <option value="smp">SMP</option>
+                                            <option value="sma">SMA</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">Harga:</label>
+                                        <input class="form-control" name="harga" required type="number"
+                                               value="{{ data[4] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">Deskripsi:</label>
+                                        <textarea class="form-control" name="deskripsi"
+                                                  required>{{ data[5] }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">ISBN:</label>
+                                        <input class="form-control" name="isbn" required type="text"
+                                               value="{{ data[6] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">Penulis:</label>
+                                        <input class="form-control" name="penulis" required type="text"
+                                               value="{{ data[7] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">Ukuran:</label>
+                                        <input class="form-control" name="ukuran" required type="text"
+                                               value="{{ data[8] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label text-dark">Halaman:</label>
+                                        <input class="form-control" name="hlmn" required type="number"
+                                               value="{{ data[9] }}">
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <input class="btn btn-success" type="submit" value="Simpan">
+                                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Tutup
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

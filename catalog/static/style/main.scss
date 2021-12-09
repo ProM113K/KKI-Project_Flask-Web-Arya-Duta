@@ -1,0 +1,89 @@
+body {
+    background-color: #0553fc;
+    color: white
+}
+
+.img-logo {
+    width: 100px;
+}
+
+.carousel-inner {
+    height: 50vh;
+}
+
+.cont-book {
+    width: 100%;
+    padding-left: 0.5em;
+}
+
+.cat-title {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.book-flex {
+    margin-left: 1em;
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+        width: 90%;
+    }
+}
+
+.nav-category {
+    background-color: #e3f2fd;
+    padding-top: 1em;
+    padding-bottom: 0.3em;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.cont-desc {
+    background-color: white;
+    color: black;
+    margin-top: 2em;
+    margin-bottom: 1.5em;
+    padding: 1em 1em 0.2em 1em;
+}
+
+.desc-table {
+    width: 100%;
+
+    img {
+        width: 100%;
+        object-fit: fill;
+    }
+}
+
+.post {
+    margin-top: 1em;
+}
+
+.login-div {
+    background-color: white;
+    color: black;
+    padding: 2em;
+    width: fit-content;
+    margin-top: 1em;
+}
+
+.add {
+    margin-bottom: 1em;
+}
+
+.ic-add {
+    padding-right: 0.3em;
+}
+
+.dropdown {
+    margin-right: 1em;
+}
+
+.table-desc-section {
+    tbody {
+        td {
+
+        }
+    }
+}

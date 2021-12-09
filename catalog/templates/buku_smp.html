@@ -1,0 +1,18 @@
+{% extends 'kategori.html' %}
+
+{% block book_list %}
+<h2 class="text-center cat-title">Buku SMP</h2>
+
+{% if files[1]|length < 1 %}
+<h4 class="text-center post">Belum ada daftar buku</h4>
+{% else %}
+<div class="cont-book">
+    <div class="book-flex">
+        {% for file in range(files[1]|length) %}
+        <div class="p-2"><a href="/desc/smp/{{ files[1][file] }}"><img
+                alt="Cover Buku SMP" src="/static/media/books/SMP/{{ files[1][file] }}"></a></div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

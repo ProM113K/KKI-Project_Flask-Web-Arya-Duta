@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}
+User Management
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center post">User Manager</h2>
+    <button class="btn btn-success float-right add" data-target="#tambahModal" data-toggle="modal"
+            type="button"><i class="far fa-plus-square ic-add"></i>Tambah
+    </button>
+
+    <!--Modal Tambah-->
+    <div aria-hidden="true" aria-labelledby="ModalLabelTambah" class="modal fade" id="tambahModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="ModalLabelTambah">Akun baru</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/user/tambah" method="post">
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="recipient-name">Pengguna:</label>
+                            <input class="form-control" name="pemakai" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="message-text">Username:</label>
+                            <input class="form-control" name="username" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="message-text">Password:</label>
+                            <input class="form-control" name="password" required type="password">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="message-text">Alamat:</label>
+                            <input class="form-control" name="alamat" required type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Batal</button>
+                            <input class="btn btn-primary" type="submit" value="Buat">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <!-- Your Columns HERE -->
+            <th hidden scope="col">ID</th>
+            <th scope="col">Nama Pengguna</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Alamat</th>
+            <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Your rows inside the table HERE: -->
+        {% for users in admin %}
+        <tr>
+            <td hidden>{{ users[0] }}</td>
+            <td>{{ users[1] }}</td>
+            <td>{{ users[2] }}</td>
+            <td>{{ users[3] }}</td>
+            <td>{{ users[4] }}</td>
+            <td>
+                <button class="btn btn-outline btn-info" data-target="#ubahModal-{{ users[0] }}"
+                        data-toggle="modal"><i class="far fa-edit"></i></button>
+                <button class="btn btn-outline btn-danger" data-target="#hapusModal-{{ users[0] }}"
+                        data-toggle="modal"><i class="far fa-trash-alt"></i></button>
+
+                <!-- Modal Hapus-->
+                <div aria-hidden="true" aria-labelledby="ModalLabelHapus" class="modal fade"
+                     id="hapusModal-{{ users[0] }}"
+                     role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-dark" id="ModalLabelHapus">Hapus akun</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-dark">Anda yakin ingin menghapus akun ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Tidak</button>
+                                <a href="/user/hapus/{{ users[0] }}/{{ users[1] }}">
+                                    <button class="btn btn-danger"
+                                            type="button">Yakin
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Modal Ubah-->
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade text-dark"
+                     id="ubahModal-{{ users[0] }}"
+                     role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ubah User</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/user/ubah" method="post">
+                                    <div class="form-group" hidden>
+                                        <label class="col-form-label">ID:</label>
+                                        <input class="form-control" name="temp_id" type="text"
+                                               value="{{ users[0] }}">
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <label class="col-form-label">Pengguna:</label>
+                                        <input class="form-control" name="temp_user" type="text"
+                                               value="{{ users[1] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Username:</label>
+                                        <input class="form-control" name="username" type="text"
+                                               value="{{ users[2] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Password:</label>
+                                        <input class="form-control" id="keyword-text" name="password" required
+                                               type="password" value="{{ users[3] }}">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input class="btn btn-success" type="submit" value="Simpan">
+                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                type="button">Tutup
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
